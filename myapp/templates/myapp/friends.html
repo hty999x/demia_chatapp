@@ -1,0 +1,36 @@
+{% extends "myapp/base.html" %}
+{% load static %}
+
+{% block extra_style %}
+<link rel="stylesheet" href="{% static 'myapp/css/friends.css' %}">
+{% endblock %}
+
+{% block header_title %}
+<h3>友達</h3>
+{% endblock %}
+
+{% block content %}
+{# signup処理部分 #}
+<div class="friends">
+    <ul class="friend-list">
+        {% for friend, talk, time in message_list %}
+        <a class="friend-list__link" href="{% url 'talk_room' friend.id %}">
+            <li class="friend-list__item">
+                <!-- それぞれが別のトーク画面に飛ぶようにリンクをはる -->
+                <img class="friend-list__usericon" src="{{ friend.icon.url }}">
+                <div class="friend-list__username">{{ friend.username }}</div>
+                <!-- ここから最新のトークを表示する部分 -->
+                {% if talk %}
+                <div class="friend-list__talk">
+                    <p class="friend-list__content">{{ talk }}</p>
+                    <p class="friend-list__time">{{ time|date:"n/j H:i" }}</p>
+                </div>
+                {% endif %}
+            </li>
+        </a>
+        {% empty %}
+        {% endfor %}
+        <!-- ここまで　最新のトークを表示するVer -->
+    </ul>
+</div>
+{% endblock %}

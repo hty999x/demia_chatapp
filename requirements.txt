@@ -1,2 +1,6 @@
 Django
 Pillow
+
+-r requirements-dev.txt
+gunicorn
+psycopg2

@@ -1,1 +1,61 @@
-TR
+{% extends "myapp/base.html" %}
+{% load static %}
+
+{% block extra_style %}
+<link rel="stylesheet" href="{% static 'myapp/css/talk_room.css' %}">
+{% endblock %}
+
+{% block header-title %}
+{{ friend.username }}
+{% endblock %}
+
+{% block content %}
+<div class="talk_room">
+    <ul class="chatboard" id="chatboard">
+        {% for talk in message_list %}
+        <li class="">
+            <p class="chatboard__name">＞{{ talk.talk_from }}</p>
+            <p class="chatboard__text">{{ talk.talk }}</p>
+            <p class="chatboard__time">{{ talk.time|date:"m/d" }}<br>{{ talk.time|date:"H:i" }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+    <form class="talk_room__sendbox" method="POST">
+        {% csrf_token %}
+        {{ form.talk }}
+        <button class="talk_room__sendbox-btn" type="submit">送信</button>
+    </form>
+    <!--     
+    <ul class="friend-list">
+        {% for friend, talk, time in info %}
+        <a class="friend-list__link" href="{% url 'talk_room' friend.id %}">
+            <li class="friend-list__item">
+                <!-- それぞれが別のトーク画面に飛ぶようにリンクをはる -->
+    <!-- <img class="friend-list__usericon" src="{{ friend.icon.url }}"> -->
+    <!-- <div class="friend-list__username">{{ friend.username }}</div> -->
+    <!-- ここから最新のトークを表示する部分 -->
+    <!-- {% if talk %}
+    <div class="friend-list__talk">
+        <p class="friend-list__content">{{ talk }}</p>
+        <p class="friend-list__time">{{ time|date:"n/j H:i" }}</p>
+    </div>
+    {% endif %}
+    </li>
+    </a>
+    {% empty %} -->
+    <!-- {% endfor %} -->
+    <!-- ここまで　最新のトークを表示するVer -->
+    <!-- </ul> -->
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- 機能を載せるために不可避だったので、ここだけコピペで実装してください -->
+<script>
+    // トークの表示を新しいものを下にしているため、最下にスクロールさせる
+    document.addEventListener("DOMContentLoaded", function () {
+        const chatboard = document.getElementById("chatboard");
+        window.scroll(0, chatboard.scrollHeight);
+    });
+</script>
+{% endblock %}
