@@ -38,6 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myapp',
+
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +61,7 @@ ROOT_URLCONF = 'intern.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,5 +133,39 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media_local'
 AUTH_USER_MODEL = "myapp.CustomUser"
 
-LOGIN_URL = 'login'
+LOGIN_URL = 'account_login'
 LOGIN_REDIRECT_URL = '/friends'
+LOGOUT_REDIRECT_URL = '/'
+
+
+
+
+# 以下allauthの設定
+SITE_ID = 1
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+MIDDLEWARE.append('allauth.account.middleware.AccountMiddleware')
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_USERNAME_REQUIRED = True
+
+ACCOUNT_LOGOUT_ON_GET = True  # ログアウトリンクのクリック一発でログアウト
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True # メールアドレスでの確認後即時ログイン
+
+# django-allauthが送信するメールの件名に自動付与される接頭辞をブランクに
+ACCOUNT_EMAIL_SUBJECT_PREFIX = ''
+ACCOUNT_MAX_EMAIL_ADDRESSES = 2
+
+# allauthのフォームカスタマイズ
+ACCOUNT_FORMS = {
+    'login': 'myapp.forms.MyLoginForm',
+    'signup': 'myapp.forms.MySignupForm',
+    'reset_password_from_key': 'myapp.forms.MyResetPasswordKeyForm',
+    'reset_password': 'myapp.forms.MyResetPasswordForm',
+}
+
+#signupformからの情報をusermodelに保存するのに必要
+ACCOUNT_ADAPTER = 'myapp.adapter.AccountAdapter'

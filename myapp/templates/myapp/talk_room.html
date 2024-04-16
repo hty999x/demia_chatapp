@@ -2,29 +2,32 @@
 {% load static %}
 
 {% block extra_style %}
-<link rel="stylesheet" href="{% static 'myapp/css/talk_room.css' %}">
+<link href="{% static 'myapp/css/talk_room.css' %}" type="text/css" rel="stylesheet" />
 {% endblock %}
 
 {% block header-title %}
-{{ friend.username }}
+<h3>{{ friend.username }}</h3>
 {% endblock %}
 
 {% block content %}
 <div class="talk_room">
-    <ul class="chatboard" id="chatboard">
-        {% for talk in message_list %}
-        <li class="">
-            <p class="chatboard__name">＞{{ talk.talk_from }}</p>
-            <p class="chatboard__text">{{ talk.talk }}</p>
-            <p class="chatboard__time">{{ talk.time|date:"m/d" }}<br>{{ talk.time|date:"H:i" }}</p>
-        </li>
-        {% endfor %}
-    </ul>
-    <form class="talk_room__sendbox" method="POST">
-        {% csrf_token %}
-        {{ form.talk }}
-        <button class="talk_room__sendbox-btn" type="submit">送信</button>
-    </form>
+    <div class="container">
+        <ul class="chatboard" id="chatboard">
+            {% for talk in message_list %}
+            <li
+                class="chatboard__content chatboard__content--{% if talk.talk_from == user %}user{% else %}friend{% endif %}">
+                <p class="chatboard__name">＞{{ talk.talk_from }}</p>
+                <p class="chatboard__text">{{ talk.talk }}</p>
+                <p class="chatboard__time">{{ talk.time|date:"m/d" }}<br>{{ talk.time|date:"H:i" }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+        <form class="talk_room__sendbox" method="POST">
+            {% csrf_token %}
+            {{ form.talk }}
+            <button class="talk_room__sendbox-btn" type="submit">送信</button>
+        </form>
+    </div>
     <!--     
     <ul class="friend-list">
         {% for friend, talk, time in info %}

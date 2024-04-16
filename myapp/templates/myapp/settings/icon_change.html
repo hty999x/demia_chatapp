@@ -1,0 +1,52 @@
+{% extends "myapp/base.html" %}
+{% load static %}
+
+{% block extra_style %}
+<link href="{% static 'myapp/css/settings/icon_change.css' %}" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+{% block header-title %}
+<h3>アイコン変更</h3>
+{% endblock %}
+
+{% block content %}
+<!-- 7つの特別なクラス -->
+<div class="icon_change">
+    <div class="icon_change_container container">
+        <div class="container-form">
+            <form class="icon_change_form" method="post" action="{% url 'icon_change' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="icon_change_form_title">
+                    <h4>アイコンを変更する</h4>
+                </div>
+                <div class="icon_change_form_contents">
+                    {% for field in form %}
+                    <div>
+                        <!-- <div>{{ field.label }}</div> -->
+                        <div class="icon_change_form_content">{{ field }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="icon_change_form_field">
+                    <div>
+                        <h5>現在の画像</h5>
+                    </div>
+                    {% if user.icon %}
+                    <div class="icon_change_form_field_icon">
+                        <img src="{{ user.icon.url }}" alt="" width="100">
+                    </div>
+                    {% else %}
+                    -現在設定されていません-
+                    {% endif %}
+                </div>
+                <div><button class="btn" type="submit">変更</button></div>
+                {% for field in form %}
+                {% for error in field.errors %}
+                <p class="field_error">{{ error }}</p>
+                {% endfor %}
+                {% endfor %}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

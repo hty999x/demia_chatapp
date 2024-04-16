@@ -1,0 +1,3 @@
+.form div:nth-of-type(3)>.field-content {
+    transform: translateX(130px);
+}

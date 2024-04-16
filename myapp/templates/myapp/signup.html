@@ -1,27 +1,32 @@
 {% extends 'myapp/base.html' %}
 {% load static %}
+{% load widget_tweaks %}
 
 {% block extra_style %}
 <link href="{% static 'myapp/css/signup.css' %}" type="text/css" rel="stylesheet" />
 {% endblock %}
 
-{% block header-title %}{% endblock %}
+{% block header-title %}<h3>会員登録</h3>{% endblock %}
 
 {% block content %}
-<div class="main">
+<div class="signup">
     <div class="container">
         <div class="container-form">
-            <form method="post" action="{% url 'signup' %}" enctype="multipart/form-data"><!-- enctypeはファイルを扱うため -->
+            <form class="form" method="post" action="{% url 'signup' %}" enctype="multipart/form-data">
+                <!-- enctypeはファイルを扱うため -->
                 {% csrf_token %}
-                {{ form.as_p }}
-                <button class="" type="submit">送信</button>
+                {% for field in form %}
+                <div class="field">
+                    <div>{{ field.label }}</div> <!-- | add_class:'field_label' -->
+                    <div class="field-content">{{ field }}</div>
+                    <!-- | add_class:'field' -->
+                </div>
+                {% for error in field.errors %}
+                <p class="field_error">{{ error }}</p>
+                {% endfor %}
+                {% endfor %}
+                <div><button class="btn" type="submit">送信</button></div>
             </form>
-        </div>
-        <div class="container-link">
-            <a class="link" href="{% url 'login' %}">ログイン</a>
-        </div>
-        <div class="container-link">
-            <a class="link" href="{% url 'signup' %}">会員登録</a>
         </div>
     </div>
 </div>

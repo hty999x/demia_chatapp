@@ -1,0 +1,32 @@
+.icon_change_form {
+    padding-bottom: 40px;
+}
+
+.icon_change_form_title {
+    transform: translateX(30px);
+}
+
+.icon_change_form_contents {
+    transform: translateX(60px);
+    position: relative;
+    width: 400px;
+}
+
+.icon_change_form_content {
+    position: absolute;
+}
+
+.icon_change_form_field {
+    padding: 60px 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 0 auto;
+    /* width: 330px; */
+}
+
+.icon_change_form_field_icon {
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+}

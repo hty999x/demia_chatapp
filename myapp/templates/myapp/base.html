@@ -14,7 +14,7 @@
     {% block header %}
     <header class="header">
         <div class="header-container">
-            <span class="header-container__title">
+            <span class="header-container-title">
                 {% block header-title %}{% endblock %}
             </span>
         </div>
@@ -27,16 +27,18 @@
     {% block footer %}
     <footer class="footer">
         <div class="footer-container">
-            <div class="footer-container__item">
-                <a href="{% url 'friends' %}" class="footer-item__link">
-                    <span class="footer-item__icon"><img src="{% static 'myapp/img/people-24px.svg' %}"></span>
-                    <span class="footer-item__text">友達</span>
+            <div class="footer-container-item">
+                <a href="{% url 'friends' %}" class="footer-container-item-link">
+                    <span class="footer-container-item-link-icon"><img
+                            src="{% static 'myapp/img/people-24px.svg' %}"></span>
+                    <span class="footer-container-item-link-text">友達</span>
                 </a>
             </div>
-            <div class="footer-container__item">
-                <a href="{% url 'setting' %}" class="footer-item__link">
-                    <span class="footer-item__icon"><img src="{% static 'myapp/img/settings-black-18dp.svg' %}"></span>
-                    <span class="footer-item__text">設定</span>
+            <div class="footer-container-item">
+                <a href="{% url 'setting' %}" class="footer-container-item-link">
+                    <span class="footer-container-item-link-icon"><img
+                            src="{% static 'myapp/img/settings-black-18dp.svg' %}"></span>
+                    <span class="footer-container-item-link-text">設定</span>
                 </a>
             </div>
         </div>
