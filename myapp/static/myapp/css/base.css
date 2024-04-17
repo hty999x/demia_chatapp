@@ -213,6 +213,13 @@ header {
     background-color: #eee;
 }
 
+.footer_extra {
+    left: 50%;
+    bottom: 80px;
+    position: absolute;
+    /* transform: translateX(-50%); */
+}
+
 .footer-container-item {
     display: flex;
     position: relative;

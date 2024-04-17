@@ -3,11 +3,12 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('signup', views.signup_view, name='signup'),
-    path('login', views.Login.as_view(), name='login'),
-    path('friends', views.friends, name='friends'),
-    path('friends_n', views.friends_n, name='friends_n'),
-    path('friends_y', views.Friends.as_view(), name='friends_y'),
+    # path('signup', views.signup_view, name='signup'),
+    # path('login', views.Login.as_view(), name='login'),
+    # path('friends', views.friends, name='friends'),
+    # path('friends_n', views.friends_n, name='friends_n'),
+    # path('friends_y', views.Friends.as_view(), name='friends_y'),
+    path('friends', views.Friends.as_view(), name='friends'),
     path('talk_room/<int:user_id>/', views.talk_room, name='talk_room'),
     path('setting', views.setting, name='setting'),
     path('username_change', views.username_change, name='username_change'),
@@ -19,7 +20,7 @@ urlpatterns = [
     path('mailaddress_change_done', views.mailaddress_change_done, name='mailaddress_change_done'),
     path('icon_change_done', views.icon_change_done, name='icon_change_done'),
     path('password_change_done', views.password_change_done, name='password_change_done'),
-    # path('accounts/', include('allauth.urls'))
+    path('accounts/', include('allauth.urls'))
 ]
 
 #viewsに@login_requiredと書くと、as_view()でエラーが出る

@@ -4,10 +4,14 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'myapp/css/base.css' %}" />
     {% block extra_style %}{% endblock %}
     <title>DeMiAインターン</title>
+    <link rel="shortcut icon" href="{% static 'myapp/img/logo.png' %}">
+    <!-- ファビコン指定 (favorite icon) -->
+    <link rel="apple-touch-icon" href="{% static 'myapp/img/logo.png' %}">
 </head>
 
 <body>
@@ -26,6 +30,7 @@
 
     {% block footer %}
     <footer class="footer">
+        {% block footer_extra %}{% endblock %}
         <div class="footer-container">
             <div class="footer-container-item">
                 <a href="{% url 'friends' %}" class="footer-container-item-link">

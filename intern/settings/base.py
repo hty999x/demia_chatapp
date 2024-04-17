@@ -11,9 +11,11 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+from intern.utils import str_to_bool
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -23,7 +25,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ozyl(r!*=wht$a7^pp+wp=zg5g96yg5wz!7fwe$gq63874z9##'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = str_to_bool(os.getenv('DEBUG') or 'true')
+# DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -80,13 +83,24 @@ WSGI_APPLICATION = 'intern.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'database',
+        'USER': 'psqluser',
+        'PASSWORD': 'psqluser',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -134,7 +148,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media_local'
 AUTH_USER_MODEL = "myapp.CustomUser"
 
-LOGIN_URL = 'account_login'
+LOGIN_URL = '/friends'
 LOGIN_REDIRECT_URL = '/friends'
 LOGOUT_REDIRECT_URL = '/'
 
@@ -162,10 +176,10 @@ ACCOUNT_MAX_EMAIL_ADDRESSES = 2
 
 # allauthのフォームカスタマイズ
 ACCOUNT_FORMS = {
-    'login': 'myapp.forms.MyLoginForm',
-    'signup': 'myapp.forms.MySignupForm',
-    'reset_password_from_key': 'myapp.forms.MyResetPasswordKeyForm',
-    'reset_password': 'myapp.forms.MyResetPasswordForm',
+    # 'login': 'myapp.forms.LoginForm',
+    'signup': 'myapp.forms.NewSignUpForm',
+    # 'reset_password_from_key': 'myapp.forms.MyResetPasswordKeyForm',
+    # 'reset_password': 'myapp.forms.MyResetPasswordForm',
 }
 
 #signupformからの情報をusermodelに保存するのに必要

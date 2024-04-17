@@ -10,29 +10,25 @@ from allauth.account.forms import (
     ResetPasswordForm
 )
 
-# User = get_user_model()
 
 class SignUpForm(UserCreationForm):
-    # Username = forms.CharField(
-    #     max_length=30,
-    #     # help_text='オプション',
-    #     label='Username:'
-    # )
-    # Email = forms.EmailField(
-    #     max_length=254,
-    #     help_text='必須 有効なメールアドレスを入力してください。',
-    #     label='Email address:'
-    # )
-    # Password1 = forms.CharField(
-    #     max_length=10,
-    #     label='Password:'
-    # )
-    # icon = forms.FileField()
     class Meta:
         model = CustomUser
         fields = ('username', 'email', 'icon')
         labels = {"icon":"画像"}
-        # パスワードは書かなくていい
+
+class NewSignUpForm(SignupForm):
+    icon = forms.ImageField()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['icon'].label = '画像'
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'email', 'icon')
+    def signup(self, request, user):
+        user.icon = self.cleaned_data['icon']
+        user.save()
+        return user
 
 class LoginForm(AuthenticationForm):
     class Meta:

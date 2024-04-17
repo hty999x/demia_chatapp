@@ -12,11 +12,6 @@
 {% block content %}
 <div class="friends">
     <div class="container">
-        <form class="friends_search" method="post" action="{% url 'friends' %}" enctype="multipart/form-data">
-            {% csrf_token %}
-            <input name="query" value="{{ request.POST.query }}" type="text" />
-            <button type="submit">検索する</button>
-        </form>
         <ul class="friends-ul">
             {% for friend, talk, time in message_list %}
             <a class="friend-ul-link" href="{% url 'talk_room' friend.id %}">
@@ -53,5 +48,15 @@
             {% endfor %}
         </ul>
     </div>
+</div>
+{% endblock %}
+
+{% block footer_extra %}
+<div class="footer_extra">
+    <form class="friends_search" method="get" action="{% url 'friends' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input name="query" value="{{ request.POST.query }}" type="text" />
+        <button type="submit">検索する</button>
+    </form>
 </div>
 {% endblock %}
