@@ -1,0 +1,40 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+
+{% block extra_style %}
+<!-- <link href="{% static 'myapp/css/.css' %}" type="text/css" rel="stylesheet" /> -->
+{% endblock %}
+
+{% block header-title %}<h3>会員登録</h3>{% endblock %}
+
+{% block content %}
+<div class="email_confirm">
+    <div class="container">
+        {% if confirmation %}
+        <div>
+            <p>会員登録を確定します。会員登録をするには下のボタンを押してください。<br>もしも、心当たりがなければボタンを押さず無視してください。</p>
+        </div>
+        <div class="container-form">
+            <form class="form" method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+                {% csrf_token %}
+                <div><button class="btn">確定</button></div>
+            </form>
+        </div>
+        {% else %}
+        {% url 'account_email' as email_url %}
+        <p>リンクの有効期限が過ぎています。<a href="{{ email_url }}">再申請</p>
+        {% endif %}
+        <!-- <div class="container-form">
+
+            <form class="form" method="post" action="{% url 'account_reset_password' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div><button class="btn" type="submit">送信</button></div>
+            </form>
+        </div> -->
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

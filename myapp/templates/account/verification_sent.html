@@ -5,15 +5,14 @@
 <!-- <link href="{% static 'myapp/css/.css' %}" type="text/css" rel="stylesheet" /> -->
 {% endblock %}
 
-{% block header-title %}<h3>パスワードリセット</h3>{% endblock %}
+{% block header-title %}<h3>会員登録</h3>{% endblock %}
 
 {% block content %}
-<div class="password_reset_from_key_done">
+<div class="verification_sent">
     <div class="container">
         <div>
-            <p>パスワードリセットが変更されました。</p>
+            <p>メールを送信しました。会員登録するにはメールのリンクをクリックしてください。</p>
         </div>
-        <a class="link" href="{% url 'account_login' %}">戻る</a>
     </div>
 </div>
 {% endblock %}
