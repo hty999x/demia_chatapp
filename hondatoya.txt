@@ -2,3 +2,4 @@
 DEBUGがtrueにならない
 メールがやはりおかしい。設定(base.py, prod.py)だと思う。.txtや.htmlはあっているはず。
 sudo -u postgres psql
+git pull --rebase
