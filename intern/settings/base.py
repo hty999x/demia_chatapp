@@ -185,4 +185,4 @@ ACCOUNT_FORMS = {
 #signupformからの情報をusermodelに保存するのに必要
 ACCOUNT_ADAPTER = 'myapp.adapter.AccountAdapter'
 
-DEFAULT_FROM_EMAIL = os.getenv('FROM_EMAIL', 'info@kanyamo.com')
+DEFAULT_FROM_EMAIL = os.getenv('FROM_EMAIL', 'info@h0nd.com')
