@@ -45,7 +45,7 @@ def index(request):
 #     return render(request, 'myapp/login.html', {'form': form})
 
 
-class Friends(ListView):
+class Friends(ListView, LoginRequiredMixin):
     model = CustomUser
     template_name = "myapp/friends.html"
     context_object_name = "message_list"
