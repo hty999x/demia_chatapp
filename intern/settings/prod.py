@@ -1,15 +1,23 @@
 from .base import *
 
 # 本番環境用の設定を記述
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 587  # 通常は587または465
-EMAIL_USE_TLS = True  # TLSを使用する場合
-EMAIL_USE_SSL = False  # SSLを使用する場合
-EMAIL_HOST_USER = 'hond'  # SMTPサーバーのユーザー名
-EMAIL_HOST_PASSWORD = 'hondhond'  # SMTPサーバーのパスワード
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'localhost'
+# EMAIL_PORT = 587  # 通常は587または465
+# EMAIL_USE_TLS = True  # TLSを使用する場合
+# EMAIL_USE_SSL = False  # SSLを使用する場合
+# EMAIL_HOST_USER = 'hond'  # SMTPサーバーのユーザー名
+# EMAIL_HOST_PASSWORD = 'hondhond'  # SMTPサーバーのパスワード
 
+INSTALLED_APPS += ["django_ses"]
 
+# 本番環境ではしっかりメールを送信
+# Amazon SES関連設定
+AWS_SES_ACCESS_KEY_ID = os.getenv('AWS_SES_ACCESS_KEY_ID')
+AWS_SES_SECRET_ACCESS_KEY = os.getenv('AWS_SES_SECRET_ACCESS_KEY')
+AWS_SES_REGION_NAME = 'ap-northeast-1'
+AWS_SES_REGION_ENDPOINT = f'email.{AWS_SES_REGION_NAME}.amazonaws.com'
+EMAIL_BACKEND = 'django_ses.SESBackend'
 
 
 
