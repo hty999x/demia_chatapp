@@ -14,8 +14,9 @@
     <div class="container">
         <div class="container-link">
             <ul class="container-link-ul">
-                <!-- <li><a href="{% url 'friends' %}" class="link">友達</a></li>
-                <li><a href="{% url 'setting' %}" class="link">設定</a></li> -->
+                <li><a href="{% url 'friends' %}" class="link">ホームに戻る
+                    </a></li>
+                <li><a href="{% url 'setting' %}" class="link">設定に戻る</a></li>
                 <li>
                     <form method="post" name="form1" action="{% url 'logout' %}">
                         {% csrf_token %}
@@ -27,4 +28,7 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block footer %}
 {% endblock %}

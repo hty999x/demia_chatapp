@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = 'django-insecure-ozyl(r!*=wht$a7^pp+wp=zg5g96yg5wz!7fwe$gq63874z9##'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = str_to_bool(os.getenv('DEBUG') or 'true')
+DEBUG = str_to_bool(os.getenv('DEBUG') or 'false')
 # DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
@@ -184,3 +184,5 @@ ACCOUNT_FORMS = {
 
 #signupformからの情報をusermodelに保存するのに必要
 ACCOUNT_ADAPTER = 'myapp.adapter.AccountAdapter'
+
+DEFAULT_FROM_EMAIL = os.getenv('FROM_EMAIL', 'info@kanyamo.com')

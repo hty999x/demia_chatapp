@@ -23,6 +23,7 @@
                 {{ field.errors }}
                 {% endfor %}
                 <!-- {{ form.as_p }} -->
+                <p><a class="button" href="{% url 'account_reset_password' %}">パスワードを忘れましたか？</a></p>
                 <div><button class="btn" type="submit">送信</button></div>
             </form>
         </div>
