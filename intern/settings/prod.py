@@ -18,7 +18,7 @@ AWS_SES_SECRET_ACCESS_KEY = os.getenv('AWS_SES_SECRET_ACCESS_KEY')
 AWS_SES_REGION_NAME = 'ap-northeast-1'
 AWS_SES_REGION_ENDPOINT = f'email.{AWS_SES_REGION_NAME}.amazonaws.com'
 EMAIL_BACKEND = 'django_ses.SESBackend'
-
+ADMINS = [('hond', 'hty999a@gmail.com'),]
 
 
 
@@ -33,6 +33,24 @@ EMAIL_BACKEND = 'django_ses.SESBackend'
 # INSTALLED_APPS += ['django_ses']
 
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True,
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    }
+}
 # 本番時のロギング設定
 # LOGGING = {
 #     'version': 1,  # 1固定
