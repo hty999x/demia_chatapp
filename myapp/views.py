@@ -16,7 +16,8 @@ from .models import CustomUser, Data
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeDoneView, PasswordChangeView
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from django.db.models import Q
+from django.db.models import Q, Prefetch, F, Subquery, OuterRef, Exists
+from django.db.models.functions import Coalesce
 import operator
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
@@ -53,11 +54,18 @@ class Friends(ListView, LoginRequiredMixin):
     def get_queryset(self):
         query = self.request.GET.get('query')
         customuser = self.request.user
+        # friend_list = super().get_queryset()
+        data_subquery = Data.objects.filter(
+            Q(talk_to=customuser, talk_from=OuterRef("pk")) |
+            Q(talk_from=customuser, talk_to=OuterRef("pk"))
+        ).order_by("-time")
+        friend_list = super().get_queryset().annotate(
+            latest_message_talk=Subquery(data_subquery.values("talk")[:1]),
+            latest_message_time=Subquery(data_subquery.values("time")[:1]),
+        )
 
         if query:
-            friend_list = CustomUser.objects.filter(username__icontains=query)
-        else:
-            friend_list = CustomUser.objects.all()
+            friend_list = friend_list.filter(Q(username__icontains=query) | Q(email__icontains=query))
 
         friends = friend_list.exclude(id=customuser.id)
         message_list = []
@@ -65,12 +73,24 @@ class Friends(ListView, LoginRequiredMixin):
         message_n_list = []
     
         for friend in friends:
-            message = Data.objects.filter(
-                Q(talk_from=customuser, talk_to=friend) | Q(talk_to=customuser, talk_from=friend)
-            ).order_by('time').last()
+            # message = friend.   Data.objects.filter(
+            #     Q(talk_from=customuser, talk_to=friend) | Q(talk_to=customuser, talk_from=friend)
+            # ).order_by('time').last()
 
-            if message:
-                message_y_list.append([friend, message.talk, message.time])
+            # if friend.latest_send_data == None:
+
+            # elif friend.latest_received_data == None:
+
+            # if (friend.latest_send_data.time | friend.latest_received_data.time) == None:
+            #     if (friend.latest_send_data.time & friend.latest_send_data.time) == null:
+            #         message.talk=None
+            #         message.time=None
+            #     elif friend.latest_send_data.time == null:
+            #         message.
+            # latest_message = friend.latest_message
+
+            if friend.latest_message_talk:
+                message_y_list.append([friend, friend.latest_message_talk, friend.latest_message_time])
             else:
                 message_n_list.append([friend, None, None])
     
@@ -88,7 +108,7 @@ def talk_room(request, user_id):
     # friend_name = friend.username
     message = Data.objects.filter(
             Q(talk_from=user, talk_to=friend) | Q(talk_to=user, talk_from=friend)
-            ).order_by('time')
+            ).order_by('time').select_related("talk_from")
     form = Talk_roomForm
     context = {
         "form":form,

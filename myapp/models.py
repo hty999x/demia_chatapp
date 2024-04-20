@@ -13,9 +13,9 @@ class CustomUser(AbstractUser):
 class Data(Model):
     talk = models.CharField(max_length=500)
     talk_from = models.ForeignKey(
-        CustomUser, on_delete=models.CASCADE, related_name="talk_from"
+        CustomUser, on_delete=models.CASCADE, related_name="send_data_set"
     )
-    talk_to = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="talk_to")
+    talk_to = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="received_data_set")
     time = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return "{}>>{}".format(self.talk_from, self.talk_to)
