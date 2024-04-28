@@ -24,14 +24,6 @@
         {% url 'account_email' as email_url %}
         <p>リンクの有効期限が過ぎています。<a href="{{ email_url }}">再申請</p>
         {% endif %}
-        <!-- <div class="container-form">
-
-            <form class="form" method="post" action="{% url 'account_reset_password' %}" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <div><button class="btn" type="submit">送信</button></div>
-            </form>
-        </div> -->
     </div>
 </div>
 {% endblock %}

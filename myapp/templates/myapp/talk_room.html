@@ -12,43 +12,21 @@
 {% block content %}
 <div class="talk_room">
     <div class="container">
-        <ul class="chatboard" id="chatboard">
+        <ul class="container-ul">
             {% for talk in message_list %}
-            <li
-                class="chatboard__content chatboard__content--{% if talk.talk_from == user %}user{% else %}friend{% endif %}">
-                <p class="chatboard__name">＞{{ talk.talk_from }}</p>
-                <p class="chatboard__text">{{ talk.talk }}</p>
-                <p class="chatboard__time">{{ talk.time|date:"m/d" }}<br>{{ talk.time|date:"H:i" }}</p>
+            <li>
+                <div>{{ talk.talk_from }}のメッセージ</div>
+                <div>{{ talk.talk }}</div>
+                <div class="talk_time">{{ talk.time|date:"m/d" }}<br>{{ talk.time|date:"H:i" }}</div>
             </li>
             {% endfor %}
         </ul>
-        <form class="talk_room__sendbox" method="POST">
+        <form method="POST">
             {% csrf_token %}
             {{ form.talk }}
-            <button class="talk_room__sendbox-btn" type="submit">送信</button>
+            <button class="btn" type="submit">送信</button>
         </form>
     </div>
-    <!--     
-    <ul class="friend-list">
-        {% for friend, talk, time in info %}
-        <a class="friend-list__link" href="{% url 'talk_room' friend.id %}">
-            <li class="friend-list__item">
-                <!-- それぞれが別のトーク画面に飛ぶようにリンクをはる -->
-    <!-- <img class="friend-list__usericon" src="{{ friend.icon.url }}"> -->
-    <!-- <div class="friend-list__username">{{ friend.username }}</div> -->
-    <!-- ここから最新のトークを表示する部分 -->
-    <!-- {% if talk %}
-    <div class="friend-list__talk">
-        <p class="friend-list__content">{{ talk }}</p>
-        <p class="friend-list__time">{{ time|date:"n/j H:i" }}</p>
-    </div>
-    {% endif %}
-    </li>
-    </a>
-    {% empty %} -->
-    <!-- {% endfor %} -->
-    <!-- ここまで　最新のトークを表示するVer -->
-    <!-- </ul> -->
 </div>
 {% endblock %}
 

@@ -22,29 +22,11 @@ import operator
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView
+from django.views import View
+from django.views.generic.edit import FormView
 
 def index(request):
     return render(request, "myapp/index.html")
-
-# def signup_view(request):
-#     if request.method == 'POST':
-#         form = SignUpForm(request.POST)
-#         if form.is_valid():
-#             form=SignUpForm(request.POST,request.FILES)
-#             form.save()
-#             return redirect('index')
-#     else:
-#         form = SignUpForm()
-#     return render(request, 'myapp/signup.html', {'form': form})
-
-# class Login(LoginView):
-#     form_class = LoginForm
-#     template_name = 'myapp/login.html'
-
-# def login_view(request):
-#     form = LoginForm
-#     return render(request, 'myapp/login.html', {'form': form})
-
 
 class Friends(ListView, LoginRequiredMixin):
     model = CustomUser
@@ -129,61 +111,53 @@ def talk_room(request, user_id):
 def setting(request):
     return render(request, "myapp/setting.html")
 
-
-
-@login_required
-def username_change(request):
-    user = request.user
-    if request.method == "GET":
-        form = UsernameChangeForm(instance=user)
-    elif request.method == "POST":
+class UsernameChangeView(View, LoginRequiredMixin):
+    template_name = "myapp/settings/username_change.html"
+    def get(self, request):
+        user = request.user
+        form = UsernameChangeForm(instance=user) 
+        context = {"form": form}
+        return render(request, self.template_name, context)
+    def post(self, request):
+        user=request.user
         form = UsernameChangeForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
             return redirect("username_change_done")
-    context = {
-        "form":form
-    }
-    return render(request, "myapp/settings/username_change.html", context)
-    """"""
+        context = {"form": form}
+        return render(request, self.template_name, context)
 
-@login_required
-def mailaddress_change(request):
-    user = request.user
-    if request.method == "GET":
-        form = MailaddressChangeForm(instance=user)
-
-    elif request.method == "POST":
+class MailaddressChangeView(View, LoginRequiredMixin):
+    template_name = "myapp/settings/mailaddress_change.html"
+    def get(self, request):
+        user = request.user
+        form = MailaddressChangeForm(instance=user) 
+        context = {"form": form}
+        return render(request, self.template_name, context)
+    def post(self, request):
+        user=request.user
         form = MailaddressChangeForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
             return redirect("mailaddress_change_done")
-        else:
-            print(form.errors)
+        context = {"form": form}
+        return render(request, self.template_name, context)
 
-    context = {
-        "form": form,
-    }
-    return render(request, "myapp/settings/mailaddress_change.html", context)
-
-@login_required
-def icon_change(request):
-    user = request.user
-    if request.method == "GET":
-        form = IconChangeForm(instance=user)
-
-    elif request.method == "POST":
-        form = IconChangeForm(request.POST, request.FILES, instance=user)
+class IconChangeView(View, LoginRequiredMixin):
+    template_name = "myapp/settings/icon_change.html"
+    def get(self, request):
+        user = request.user
+        form = IconChangeForm(instance=user) 
+        context = {"form": form}
+        return render(request, self.template_name, context)
+    def post(self, request):
+        user=request.user
+        form = IconChangeForm(request.POST, request.FILES , instance=user)
         if form.is_valid():
             form.save()
             return redirect("icon_change_done")
-        else:
-            print(form.errors)
-
-    context = {
-        "form": form,
-    }
-    return render(request, "myapp/settings/icon_change.html", context)
+        context = {"form": form}
+        return render(request, self.template_name, context)
 
 class PasswordChange(PasswordChangeView):
     form_class = PasswordChangeForm

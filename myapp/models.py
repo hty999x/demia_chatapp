@@ -1,14 +1,9 @@
 from django.db import models
 from django.db.models import Model
-
-# Create your models here.
 from django.contrib.auth.models import AbstractUser
-
-#中略
 
 class CustomUser(AbstractUser):
     icon = models.FileField(default='/')
-    #追加するフィールドやバリデーションなど。
 
 class Data(Model):
     talk = models.CharField(max_length=500)

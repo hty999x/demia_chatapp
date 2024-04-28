@@ -15,13 +15,13 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = ('username', 'email', 'icon')
-        labels = {"icon":"画像"}
+        labels = {"icon":"アイコン"}
 
 class NewSignUpForm(SignupForm):
     icon = forms.ImageField()
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['icon'].label = '画像'
+        self.fields['icon'].label = "アイコン"
     class Meta:
         model = CustomUser
         fields = ('username', 'email', 'icon')
@@ -34,7 +34,6 @@ class LoginForm(AuthenticationForm):
     class Meta:
         model = CustomUser
         fields = ('username', 'password')
-    # """ログインフォーム"""
     # def __init__(self, *args, **kwargs):
     #     super().__init__(*args, **kwargs)
     #     for field in self.fields.values():
@@ -64,7 +63,7 @@ class IconChangeForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ("icon",)
-        labels = {"icon":"画像"}
+        labels = {"icon":"アイコン"}
 
 
 class PasswordChangeForm(PasswordChangeForm):

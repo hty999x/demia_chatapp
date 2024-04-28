@@ -16,7 +16,6 @@
                 <li><a href="{% url 'mailaddress_change' %}" class="link">メールアドレス変更</a></li>
                 <li><a href="{% url 'icon_change' %}" class="link">アイコン変更</a></li>
                 <li><a href="{% url 'password_change' %}" class="link">パスワード変更</a></li>
-                <!-- <li><a href="{% url 'logout' %}" class="link">ログアウト</a></li> -->
                 <li>
                     <form method="post" name="form1" action="{% url 'logout' %}">
                         {% csrf_token %}

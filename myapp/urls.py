@@ -11,9 +11,9 @@ urlpatterns = [
     path('friends', views.Friends.as_view(), name='friends'),
     path('talk_room/<int:user_id>/', views.talk_room, name='talk_room'),
     path('setting', views.setting, name='setting'),
-    path('username_change', views.username_change, name='username_change'),
-    path('mailaddress_change', views.mailaddress_change, name='mailaddress_change'),
-    path('icon_change', views.icon_change, name='icon_change'),
+    path('username_change', views.UsernameChangeView.as_view(), name='username_change'),
+    path('mailaddress_change', views.MailaddressChangeView.as_view(), name='mailaddress_change'),
+    path('icon_change', views.IconChangeView.as_view(), name='icon_change'),
     path('password_change', views.PasswordChange.as_view(), name='password_change'),
     path("logout/", views.Logout.as_view(), name="logout"),
     path('username_change_done', views.username_change_done, name='username_change_done'),
@@ -22,5 +22,3 @@ urlpatterns = [
     path('password_change_done', views.password_change_done, name='password_change_done'),
     path('accounts/', include('allauth.urls'))
 ]
-
-#viewsに@login_requiredと書くと、as_view()でエラーが出る
